@@ -21,7 +21,7 @@ public class IfMonitorServlet extends HttpServlet {
     private AccountDAO accountDAO;
 
     @Override
-    public void init() {
+    public void init() {// init을 통한 오브젝트 생성 후 멤버변수에 저장
         outboxDAO  = new OutboxDAO();
         inboxDAO   = new InboxDAO();
         accountDAO = new AccountDAO();
