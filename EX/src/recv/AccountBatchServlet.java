@@ -67,7 +67,7 @@ public class AccountBatchServlet extends HttpServlet {
         req.setAttribute("fail",      fail);
         req.setAttribute("skip",      skip);
         req.setAttribute("log",       log.toString());
-     
+        // 결과를 batchResult.jsp로 forward
         req.getRequestDispatcher("/recv/batchResult.jsp").forward(req, resp);
     }
 
