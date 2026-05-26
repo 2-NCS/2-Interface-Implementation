@@ -79,7 +79,7 @@ public class AccountBatchServlet extends HttpServlet {
             Map<String, Object> body = JsonUtil.parse(o.payload);
             String empId  = JsonUtil.getString(body, "empId",  "");
             String deptCd = JsonUtil.getString(body, "deptCd", "");
-            
+            // 필수값 누락 확인, empId 형식 검증
             if (empId.isEmpty() || deptCd.isEmpty()) throw new SQLException("REQUIRED_MISSING");
             if (!empId.matches("E\\d{8}\\d{3}"))     throw new SQLException("EMP_ID_FORMAT");
 
