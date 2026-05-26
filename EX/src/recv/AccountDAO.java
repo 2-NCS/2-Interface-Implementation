@@ -58,7 +58,7 @@ public class AccountDAO {
             pstmt.setString(3, deptCd); 
             pstmt.executeUpdate();
         }
-
+        // account_history 테이블에 empId, txNo INSERT
         try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT_HIST)) {
             pstmt.setString(1, empId);
             pstmt.setString(2, txNo);
