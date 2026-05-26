@@ -52,7 +52,7 @@ public class AccountDAO {
         try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT_ACCOUNT)) {
             pstmt.setString(1, empId);
             pstmt.setString(2, pwdHash);
-            pstmt.setString(3, deptCd);
+            pstmt.setString(3, deptCd); 
             pstmt.executeUpdate();
         }
 
