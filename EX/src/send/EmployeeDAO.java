@@ -35,7 +35,7 @@ public class EmployeeDAO {
                 pstmt.setString(6, emp.getEmail());
                 pstmt.executeUpdate();
             }
-
+            // 3. 사원 데이터를 JSON 문자열(payload)로 가공
             String payload = toPayloadJson(emp);
             long outboxId;
             try (PreparedStatement pstmt = conn.prepareStatement(
@@ -62,7 +62,8 @@ public class EmployeeDAO {
             }
         }
     }
-
+    
+    // 사원 객체 데이터를 JSON 형식의 문자열로 변환하는 메소드
     /** payload JSON (인터페이스설계서 §3.3 형식) */
     private String toPayloadJson(Employee e) {
         Map<String, Object> m = new LinkedHashMap<>();
