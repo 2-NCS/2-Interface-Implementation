@@ -38,6 +38,7 @@ public class AccountDAO {
             throws SQLException {
 
         // 부서 존재 확인
+    	// dept 테이블에서 deptCd 확인, 없으면 DEPT_NOT_FOUND 에러
         try (PreparedStatement pstmt = conn.prepareStatement(SQL_CHECK_DEPT)) {
             pstmt.setString(1, deptCd);
             try (ResultSet rs = pstmt.executeQuery()) {
