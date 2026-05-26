@@ -36,7 +36,8 @@ public class EmpRegistServlet extends HttpServlet {
         String deptCd   = trim(req.getParameter("deptCd"));
         String position = trim(req.getParameter("position"));
         String email    = trim(req.getParameter("email"));
-
+        
+        // 2. 필수값 검증 (E10)
         if (empName.isEmpty() || deptCd.isEmpty() || position.isEmpty()) {
             forward(req, resp, "FAIL", "E10: 필수값(empName/deptCd/position) 누락", null);
             return;
@@ -72,7 +73,8 @@ public class EmpRegistServlet extends HttpServlet {
     }
 
     private static String trim(String s) { return s == null ? "" : s.trim(); }
-
+    
+    // 공통 결과 화면 포워딩 메소드
     private void forward(HttpServletRequest req, HttpServletResponse resp,
                          String status, String message, String empId)
             throws ServletException, IOException {
