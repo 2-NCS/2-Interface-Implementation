@@ -38,6 +38,7 @@ public class IfRetryServlet extends HttpServlet {
             resp.sendError(500, "재시도 오류: " + e.getMessage());
             return;
         }
+        // 끝나면 /monitor/list_로 리다이렉트를 통한 화면이동
         resp.sendRedirect(req.getContextPath() + "/monitor/list");
     }
 }
