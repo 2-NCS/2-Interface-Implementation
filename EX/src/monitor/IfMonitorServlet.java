@@ -15,7 +15,7 @@ import send.OutboxDAO;
 
 @WebServlet("/monitor/list_")
 public class IfMonitorServlet extends HttpServlet {
-
+	// 함수 호출을 위한 멤버변수 선언
     private OutboxDAO  outboxDAO;
     private InboxDAO   inboxDAO;
     private AccountDAO accountDAO;
