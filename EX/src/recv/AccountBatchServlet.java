@@ -137,7 +137,7 @@ public class AccountBatchServlet extends HttpServlet {
             
      
         } finally {
-        
+        // finally에서 autoCommit 복원 및 DB 연결 해제
             if (conn != null) {
                 try { conn.setAutoCommit(true); } catch (SQLException ignored) {}
                 DBManager.close(conn);
