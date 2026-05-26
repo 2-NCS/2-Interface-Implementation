@@ -59,6 +59,7 @@ public class InboxDAO {
             }
         }
         return list;
+        // ResultSet으로 한 줄씩 읽고 Inbox 객체에 담아 List 반환
     }
 
     public static class Inbox {
