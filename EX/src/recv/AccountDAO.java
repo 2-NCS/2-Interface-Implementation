@@ -38,6 +38,7 @@ public class AccountDAO {
             throws SQLException {
 
         // 부서 존재 확인
+    	// dept 테이블에서 deptCd 확인, 없으면 DEPT_NOT_FOUND 에러
         try (PreparedStatement pstmt = conn.prepareStatement(SQL_CHECK_DEPT)) {
             pstmt.setString(1, deptCd);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -45,31 +46,36 @@ public class AccountDAO {
             }
         }
         conn.setAutoCommit(false);
+        // empId + "1234" 로 초기 비밀번호 생성 후 SHA-256 암호화
         // 비밀번호 해시 = SHA-256(empId + 초기비번 suffix)
         String pwdPlain = empId + DBManager.getInitPasswordSuffix();
         String pwdHash  = HashUtil.sha256(pwdPlain);
-
+        
+        // account 테이블에 empId, pwdHash, deptCd INSERT
         try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT_ACCOUNT)) {
             pstmt.setString(1, empId);
             pstmt.setString(2, pwdHash);
-            pstmt.setString(3, deptCd);
+            pstmt.setString(3, deptCd); 
             pstmt.executeUpdate();
         }
-
+        // account_history 테이블에 empId, txNo INSERT
         try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT_HIST)) {
             pstmt.setString(1, empId);
             pstmt.setString(2, txNo);
             pstmt.executeUpdate();
         }
+        // conn.commit() 으로 저장
         conn.commit();
     }
 
     /** 모니터링 — 계정 목록 (pwd_hash 노출 X) */
     public List<Map<String, Object>> listAccounts() throws SQLException {
         List<Map<String, Object>> out = new ArrayList<>();
+        // DBManager로 DB 연결 후 SQL_LIST 실행
         try (Connection conn = DBManager.getGroupwareConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_LIST);
              ResultSet rs = pstmt.executeQuery()) {
+        	// ResultSet으로 Map에 담아 List 반환
             while (rs.next()) {
                 Map<String, Object> row = new LinkedHashMap<>();
                 row.put("accountId", rs.getString("account_id"));

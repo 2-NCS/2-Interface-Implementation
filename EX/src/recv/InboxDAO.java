@@ -25,22 +25,28 @@ public class InboxDAO {
 
     public void insertInTx(Connection conn, String ifId, String txNo, String payload,
                            String status, int procMs, String errMsg) throws SQLException {
-        try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT)) {
+    	// conn을 통해 SQL_INSERT 쿼리 준비
+    	try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT))
+        {
+    		// 파라미터 6개 바인딩
             pstmt.setString(1, ifId);
             pstmt.setString(2, txNo);
             pstmt.setString(3, payload);
             pstmt.setString(4, status);
             pstmt.setInt   (5, procMs);
             pstmt.setString(6, errMsg);
+            // executeUpdate()로 INSERT 실행
             pstmt.executeUpdate();
         }
     }
 
     public List<Inbox> listAll() throws SQLException {
         List<Inbox> list = new ArrayList<>();
+        // DBManager로 DB 연결 후 SQL_LIST 쿼리 실행
         try (Connection conn = DBManager.getGroupwareConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_LIST);
              ResultSet rs = pstmt.executeQuery()) {
+            // ResultSet으로 한 줄씩 읽고 Inbox 객체에 담아 List 반환
             while (rs.next()) {
                 Inbox in = new Inbox();
                 in.inboxId = rs.getLong("inbox_id");

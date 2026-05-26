@@ -45,11 +45,11 @@ public class AccountBatchServlet extends HttpServlet {
 
         int totalRead = 0, success = 0, fail = 0, skip = 0;
         StringBuilder log = new StringBuilder();
-
+        // outboxDAO.fetchPending()으로 처리할 목록 가져오기
         try {
             List<Outbox> pendings = outboxDAO.fetchPending(DBManager.getMaxRetry(), DBManager.getFetchSize());
             totalRead = pendings.size();
-
+            // 하나씩 processOne() 호출하여 OK/SKIP/FAIL 카운트
             for (Outbox o : pendings) {
                 String result = processOne(o);
                 log.append(String.format("[outboxId=%d, tx=%s] %s%n", o.outboxId, o.txNo, result));
@@ -67,23 +67,26 @@ public class AccountBatchServlet extends HttpServlet {
         req.setAttribute("fail",      fail);
         req.setAttribute("skip",      skip);
         req.setAttribute("log",       log.toString());
+        // 결과를 batchResult.jsp로 forward
         req.getRequestDispatcher("/recv/batchResult.jsp").forward(req, resp);
     }
 
     private String processOne(Outbox o) {
         long startMs = System.currentTimeMillis();
         Connection conn = null;
+        // payload JSON 파싱하여 empId, deptCd 추출
         try {
             Map<String, Object> body = JsonUtil.parse(o.payload);
             String empId  = JsonUtil.getString(body, "empId",  "");
             String deptCd = JsonUtil.getString(body, "deptCd", "");
-
+            // 필수값 누락 확인, empId 형식 검증
             if (empId.isEmpty() || deptCd.isEmpty()) throw new SQLException("REQUIRED_MISSING");
             if (!empId.matches("E\\d{8}\\d{3}"))     throw new SQLException("EMP_ID_FORMAT");
 
             conn = DBManager.getGroupwareConnection();
             conn.setAutoCommit(false);
-
+            
+            // inboxDAO.insertInTx() 호출
             try {
                 inboxDAO.insertInTx(conn, o.ifId, o.txNo, o.payload, "S", 0, null);
             } catch (SQLException ex) {
@@ -94,14 +97,15 @@ public class AccountBatchServlet extends HttpServlet {
                 }
                 throw ex;
             }
-
+            // accountDAO.createAccountInTX() 호출 후 commit
             accountDAO.createAccountInTx(conn, empId, deptCd, o.txNo);
-
             conn.commit();
+            
             outboxDAO.markSuccess(o.outboxId);
             return String.format("OK (account=%s, %dms)", empId, System.currentTimeMillis() - startMs);
 
         } catch (SQLException e) {
+        	 // 에러 발생시 rollback 후 기록 남기고 FAIL 반환
             String msg = e.getMessage();
             String errCode;
             if      (msg != null && msg.startsWith("DEPT_NOT_FOUND")) errCode = "E30";
@@ -119,7 +123,7 @@ public class AccountBatchServlet extends HttpServlet {
                             errCode + ": " + msg);
                 } catch (SQLException ignored) { }
             } catch (SQLException ignored) {}
-
+            
             try { outboxDAO.markFail(o.outboxId, errCode + ": " + msg); }
             catch (SQLException ignored) {}
             return "FAIL " + errCode + ": " + msg;
@@ -130,8 +134,10 @@ public class AccountBatchServlet extends HttpServlet {
             try { outboxDAO.markFail(o.outboxId, "E99: " + e.getMessage()); }
             catch (SQLException ignored) {}
             return "FAIL E99: " + e.getMessage();
-
+            
+     
         } finally {
+        // finally에서 autoCommit 복원 및 DB 연결 해제
             if (conn != null) {
                 try { conn.setAutoCommit(true); } catch (SQLException ignored) {}
                 DBManager.close(conn);
