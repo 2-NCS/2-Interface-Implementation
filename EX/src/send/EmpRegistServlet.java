@@ -47,6 +47,7 @@ public class EmpRegistServlet extends HttpServlet {
             forward(req, resp, "FAIL", "E10: empName 길이 초과 (50)", null);
             return;
         }
+        // 4. 부서코드 정규식 검증 (E10
         if (!deptCd.matches("D\\d{3}")) {
             forward(req, resp, "FAIL", "E10: deptCd 형식 오류 (Dnnn)", null);
             return;
