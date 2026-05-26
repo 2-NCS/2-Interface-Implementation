@@ -7,14 +7,6 @@ import java.util.Map;
 import common.DBManager;
 import common.JsonUtil;
 
-/**
- * EmployeeDAO — employee + if_outbox 트랜잭션 통합 — ★ 정답
- *
- * <pre>
- * 능력단위요소 2 / 수행준거 2.2
- * 학습모듈 2-1 §2 (테이블 인터페이스), Transactional Outbox 패턴
- * </pre>
- */
 public class EmployeeDAO {
 
     private static final String SQL_INSERT_EMP =
@@ -26,13 +18,10 @@ public class EmployeeDAO {
 
     private static final String IF_ID = "IF_HR_001";
 
-    /**
-     * 사원 등록 + outbox 한 트랜잭션.
-     * @return 생성된 outbox_id
-     */
     public long createEmployeeWithOutbox(Employee emp) throws SQLException {
         Connection conn = null;
         try {
+        	// 1. 데이터베이스 커넥션 연결 및 수동 트랜잭션(수동 커밋) 설정
             conn = DBManager.getHrmConnection();
             conn.setAutoCommit(false);
 
