@@ -15,13 +15,13 @@ import send.OutboxDAO;
 
 @WebServlet("/monitor/list_")
 public class IfMonitorServlet extends HttpServlet {
-
+	// 함수 호출을 위한 멤버변수 선언
     private OutboxDAO  outboxDAO;
     private InboxDAO   inboxDAO;
     private AccountDAO accountDAO;
 
     @Override
-    public void init() {
+    public void init() {// init을 통한 오브젝트 생성 후 멤버변수에 저장
         outboxDAO  = new OutboxDAO();
         inboxDAO   = new InboxDAO();
         accountDAO = new AccountDAO();
@@ -30,16 +30,20 @@ public class IfMonitorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+    	// TODO 엔드포인트 /monitor/list_로 get요청시 -> 
+    	// GET /monitor/list 로그 생성
         System.out.println("GET /monitor/list");
-
+        // req.setAttribute를 통해 req의 속성의 이름(outboxList, inboxList, accountList)에
+    	// 내용물(outboxDAO.listAll(), inboxDAO.listAll(), accountDAO.listAccounts())을 set
         try {
             req.setAttribute("outboxList",  outboxDAO.listAll());
             req.setAttribute("inboxList",   inboxDAO.listAll());
             req.setAttribute("accountList", accountDAO.listAccounts());
-        } catch (SQLException e) {
+        } catch (SQLException e) {// 이 때 내용물을 가지고 오는 과정에서 SQL관련 에러발생상황을 대비하기 위해 SQLException를 try catch 후 에러메시지 전달
             e.printStackTrace();
             req.setAttribute("error", "조회 오류: " + e.getMessage());
         }
+        // 속성의 정보를 foward방식으로 /monitor/list.jsp 에 전달 및 화면이동
         req.getRequestDispatcher("/monitor/list.jsp").forward(req, resp);
     }
 }
