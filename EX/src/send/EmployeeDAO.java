@@ -60,6 +60,7 @@ public class EmployeeDAO {
             if (conn != null) try { conn.rollback(); } catch (SQLException ignored) {}
             throw e;
         } finally {
+        	// 7. 사용이 끝난 커넥션 자원 반환 및 자동 커밋 원상복구
             if (conn != null) {
                 try { conn.setAutoCommit(true); } catch (SQLException ignored) {}
                 DBManager.close(conn);
