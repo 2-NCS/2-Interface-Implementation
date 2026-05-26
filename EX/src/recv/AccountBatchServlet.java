@@ -86,7 +86,7 @@ public class AccountBatchServlet extends HttpServlet {
             conn = DBManager.getGroupwareConnection();
             conn.setAutoCommit(false);
             
-            
+            // inboxDAO.insertInTx() 호출
             try {
                 inboxDAO.insertInTx(conn, o.ifId, o.txNo, o.payload, "S", 0, null);
             } catch (SQLException ex) {
