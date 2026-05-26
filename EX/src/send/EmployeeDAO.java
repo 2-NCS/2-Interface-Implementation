@@ -46,6 +46,7 @@ public class EmployeeDAO {
                 pstmt.setString(2, emp.getEmpId());   // 멱등키
                 pstmt.setString(3, payload);
                 pstmt.executeUpdate();
+                // 생성된 outbox_id 식별자 값 획득
                 try (ResultSet keys = pstmt.getGeneratedKeys()) {
                     outboxId = keys.next() ? keys.getLong(1) : -1L;
                 }
