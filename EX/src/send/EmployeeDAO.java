@@ -51,7 +51,7 @@ public class EmployeeDAO {
                     outboxId = keys.next() ? keys.getLong(1) : -1L;
                 }
             }
-
+            // 5. 모든 작업이 정상적으로 끝나면 트랜잭션 Commit 완료
             conn.commit();
             return outboxId;
             
