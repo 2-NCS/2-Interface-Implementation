@@ -50,7 +50,8 @@ public class AccountDAO {
         // 비밀번호 해시 = SHA-256(empId + 초기비번 suffix)
         String pwdPlain = empId + DBManager.getInitPasswordSuffix();
         String pwdHash  = HashUtil.sha256(pwdPlain);
-
+        
+        // account 테이블에 empId, pwdHash, deptCd INSERT
         try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT_ACCOUNT)) {
             pstmt.setString(1, empId);
             pstmt.setString(2, pwdHash);
