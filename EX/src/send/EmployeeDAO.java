@@ -38,6 +38,8 @@ public class EmployeeDAO {
             // 3. 사원 데이터를 JSON 문자열(payload)로 가공
             String payload = toPayloadJson(emp);
             long outboxId;
+            
+            // 4. 연동 대기열(if_outbox) 테이블에 데이터 삽입 (생성된 PK 값을 가져오도록 설정)
             try (PreparedStatement pstmt = conn.prepareStatement(
                     SQL_INSERT_OUTBOX, Statement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, IF_ID);
@@ -51,7 +53,7 @@ public class EmployeeDAO {
 
             conn.commit();
             return outboxId;
-
+            
         } catch (SQLException e) {
             if (conn != null) try { conn.rollback(); } catch (SQLException ignored) {}
             throw e;
