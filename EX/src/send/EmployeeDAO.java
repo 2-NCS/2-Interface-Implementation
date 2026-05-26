@@ -7,14 +7,6 @@ import java.util.Map;
 import common.DBManager;
 import common.JsonUtil;
 
-/**
- * EmployeeDAO — employee + if_outbox 트랜잭션 통합 — ★ 정답
- *
- * <pre>
- * 능력단위요소 2 / 수행준거 2.2
- * 학습모듈 2-1 §2 (테이블 인터페이스), Transactional Outbox 패턴
- * </pre>
- */
 public class EmployeeDAO {
 
     private static final String SQL_INSERT_EMP =
@@ -26,16 +18,14 @@ public class EmployeeDAO {
 
     private static final String IF_ID = "IF_HR_001";
 
-    /**
-     * 사원 등록 + outbox 한 트랜잭션.
-     * @return 생성된 outbox_id
-     */
     public long createEmployeeWithOutbox(Employee emp) throws SQLException {
         Connection conn = null;
         try {
+        	// 1. 데이터베이스 커넥션 연결 및 수동 트랜잭션(수동 커밋) 설정
             conn = DBManager.getHrmConnection();
             conn.setAutoCommit(false);
-
+            
+            // 2. 사원 정보(employee) 테이블에 데이터 삽입
             try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT_EMP)) {
                 pstmt.setString(1, emp.getEmpId());
                 pstmt.setString(2, emp.getEmpName());
@@ -45,34 +35,40 @@ public class EmployeeDAO {
                 pstmt.setString(6, emp.getEmail());
                 pstmt.executeUpdate();
             }
-
+            // 3. 사원 데이터를 JSON 문자열(payload)로 가공
             String payload = toPayloadJson(emp);
             long outboxId;
+            
+            // 4. 연동 대기열(if_outbox) 테이블에 데이터 삽입 (생성된 PK 값을 가져오도록 설정)
             try (PreparedStatement pstmt = conn.prepareStatement(
                     SQL_INSERT_OUTBOX, Statement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, IF_ID);
                 pstmt.setString(2, emp.getEmpId());   // 멱등키
                 pstmt.setString(3, payload);
                 pstmt.executeUpdate();
+                // 생성된 outbox_id 식별자 값 획득
                 try (ResultSet keys = pstmt.getGeneratedKeys()) {
                     outboxId = keys.next() ? keys.getLong(1) : -1L;
                 }
             }
-
+            // 5. 모든 작업이 정상적으로 끝나면 트랜잭션 Commit 완료
             conn.commit();
             return outboxId;
-
+            
         } catch (SQLException e) {
+        	// 6. 예외 발생 시 트랜잭션 Rollback 처리
             if (conn != null) try { conn.rollback(); } catch (SQLException ignored) {}
             throw e;
         } finally {
+        	// 7. 사용이 끝난 커넥션 자원 반환 및 자동 커밋 원상복구
             if (conn != null) {
                 try { conn.setAutoCommit(true); } catch (SQLException ignored) {}
                 DBManager.close(conn);
             }
         }
     }
-
+    
+    // 사원 객체 데이터를 JSON 형식의 문자열로 변환하는 메소드
     /** payload JSON (인터페이스설계서 §3.3 형식) */
     private String toPayloadJson(Employee e) {
         Map<String, Object> m = new LinkedHashMap<>();
