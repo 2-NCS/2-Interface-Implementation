@@ -33,7 +33,8 @@ public class IfMonitorServlet extends HttpServlet {
     	// TODO 엔드포인트 /monitor/list_로 get요청시 -> 
     	// GET /monitor/list 로그 생성
         System.out.println("GET /monitor/list");
-
+        // req.setAttribute를 통해 req의 속성의 이름(outboxList, inboxList, accountList)에
+    	// 내용물(outboxDAO.listAll(), inboxDAO.listAll(), accountDAO.listAccounts())을 set
         try {
             req.setAttribute("outboxList",  outboxDAO.listAll());
             req.setAttribute("inboxList",   inboxDAO.listAll());
