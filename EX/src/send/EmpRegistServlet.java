@@ -30,7 +30,8 @@ public class EmpRegistServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         System.out.println("POST /send/emp");
-
+        
+        // 1. 폼 파라미터 수신 및 공백 제거
         String empName  = trim(req.getParameter("empName"));
         String deptCd   = trim(req.getParameter("deptCd"));
         String position = trim(req.getParameter("position"));
