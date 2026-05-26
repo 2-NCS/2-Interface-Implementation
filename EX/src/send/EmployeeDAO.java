@@ -24,7 +24,8 @@ public class EmployeeDAO {
         	// 1. 데이터베이스 커넥션 연결 및 수동 트랜잭션(수동 커밋) 설정
             conn = DBManager.getHrmConnection();
             conn.setAutoCommit(false);
-
+            
+            // 2. 사원 정보(employee) 테이블에 데이터 삽입
             try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT_EMP)) {
                 pstmt.setString(1, emp.getEmpId());
                 pstmt.setString(2, emp.getEmpName());
