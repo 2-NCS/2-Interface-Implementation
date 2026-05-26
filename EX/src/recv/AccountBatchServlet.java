@@ -74,7 +74,7 @@ public class AccountBatchServlet extends HttpServlet {
     private String processOne(Outbox o) {
         long startMs = System.currentTimeMillis();
         Connection conn = null;
-       
+        // payload JSON 파싱하여 empId, deptCd 추출
         try {
             Map<String, Object> body = JsonUtil.parse(o.payload);
             String empId  = JsonUtil.getString(body, "empId",  "");
