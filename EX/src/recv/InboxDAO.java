@@ -35,6 +35,7 @@ public class InboxDAO {
             pstmt.setString(4, status);
             pstmt.setInt   (5, procMs);
             pstmt.setString(6, errMsg);
+            // executeUpdate()로 INSERT 실행
             pstmt.executeUpdate();
         }
     }
