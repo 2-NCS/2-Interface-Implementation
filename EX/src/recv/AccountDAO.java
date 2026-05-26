@@ -64,6 +64,7 @@ public class AccountDAO {
             pstmt.setString(2, txNo);
             pstmt.executeUpdate();
         }
+        // conn.commit() 으로 저장
         conn.commit();
     }
 
