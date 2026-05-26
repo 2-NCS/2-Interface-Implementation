@@ -39,7 +39,7 @@ public class IfMonitorServlet extends HttpServlet {
             req.setAttribute("outboxList",  outboxDAO.listAll());
             req.setAttribute("inboxList",   inboxDAO.listAll());
             req.setAttribute("accountList", accountDAO.listAccounts());
-        } catch (SQLException e) {
+        } catch (SQLException e) {// 이 때 내용물을 가지고 오는 과정에서 SQL관련 에러발생상황을 대비하기 위해 SQLException를 try catch 후 에러메시지 전달
             e.printStackTrace();
             req.setAttribute("error", "조회 오류: " + e.getMessage());
         }
