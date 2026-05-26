@@ -60,7 +60,8 @@ public class EmpRegistServlet extends HttpServlet {
         // 6. 사원번호(empId) 및 입사일자(hireDt) 자동 생성
         String hireDt = new SimpleDateFormat("yyyyMMdd").format(new Date());
         String empId  = "E" + hireDt + String.format("%03d", new Random().nextInt(1000));
-
+        
+        // 7. Employee VO 객체 생성
         Employee emp = new Employee(empId, empName, deptCd, position, hireDt, email);
 
         try {
