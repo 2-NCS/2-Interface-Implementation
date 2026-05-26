@@ -56,6 +56,7 @@ public class EmployeeDAO {
             return outboxId;
             
         } catch (SQLException e) {
+        	// 6. 예외 발생 시 트랜잭션 Rollback 처리
             if (conn != null) try { conn.rollback(); } catch (SQLException ignored) {}
             throw e;
         } finally {
