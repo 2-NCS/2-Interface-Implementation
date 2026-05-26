@@ -25,7 +25,7 @@ public class Employee {
     private String email;        // VARCHAR(100)
 
     public Employee() {}
-
+    // 멤버 필드 6개 선언 및 전체 생성자 초기화
     public Employee(String empId, String empName, String deptCd,
                     String position, String hireDt, String email) {
         this.empId    = empId;
