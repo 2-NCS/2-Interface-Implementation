@@ -12,7 +12,7 @@ import send.OutboxDAO;
 
 @WebServlet("/monitor/retry_")
 public class IfRetryServlet extends HttpServlet {
-
+	// 함수 호출을 위한 멤버변수 선언
     private OutboxDAO outboxDAO;
 
     @Override
