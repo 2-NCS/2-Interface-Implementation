@@ -49,7 +49,7 @@ public class AccountBatchServlet extends HttpServlet {
         try {
             List<Outbox> pendings = outboxDAO.fetchPending(DBManager.getMaxRetry(), DBManager.getFetchSize());
             totalRead = pendings.size();
-       
+            // 하나씩 processOne() 호출하여 OK/SKIP/FAIL 카운트
             for (Outbox o : pendings) {
                 String result = processOne(o);
                 log.append(String.format("[outboxId=%d, tx=%s] %s%n", o.outboxId, o.txNo, result));
