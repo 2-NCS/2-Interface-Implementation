@@ -57,7 +57,7 @@ public class EmpRegistServlet extends HttpServlet {
             forward(req, resp, "FAIL", "E31: 미지원 직급 (" + position + ")", null);
             return;
         }
-
+        // 6. 사원번호(empId) 및 입사일자(hireDt) 자동 생성
         String hireDt = new SimpleDateFormat("yyyyMMdd").format(new Date());
         String empId  = "E" + hireDt + String.format("%03d", new Random().nextInt(1000));
 
