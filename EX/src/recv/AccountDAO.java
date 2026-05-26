@@ -75,6 +75,7 @@ public class AccountDAO {
         try (Connection conn = DBManager.getGroupwareConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_LIST);
              ResultSet rs = pstmt.executeQuery()) {
+        	// ResultSet으로 Map에 담아 List 반환
             while (rs.next()) {
                 Map<String, Object> row = new LinkedHashMap<>();
                 row.put("accountId", rs.getString("account_id"));
