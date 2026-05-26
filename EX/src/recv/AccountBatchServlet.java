@@ -97,7 +97,7 @@ public class AccountBatchServlet extends HttpServlet {
                 }
                 throw ex;
             }
-            
+            // accountDAO.createAccountInTX() 호출 후 commit
             accountDAO.createAccountInTx(conn, empId, deptCd, o.txNo);
             conn.commit();
             
