@@ -52,7 +52,7 @@ public class OutboxDAO {
         }
         return out;
     }
-    
+    // 2. 연동 성공(S) 상태 업데이트 메서드 구현
     public int markSuccess(long outboxId) throws SQLException {
         try (Connection conn = DBManager.getHrmConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_MARK_SUCCESS)) {
