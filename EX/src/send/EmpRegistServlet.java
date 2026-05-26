@@ -42,6 +42,7 @@ public class EmpRegistServlet extends HttpServlet {
             forward(req, resp, "FAIL", "E10: 필수값(empName/deptCd/position) 누락", null);
             return;
         }
+        // 3. 이름 길이 검증 (E10)
         if (empName.length() > 50) {
             forward(req, resp, "FAIL", "E10: empName 길이 초과 (50)", null);
             return;
