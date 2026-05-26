@@ -30,6 +30,8 @@ public class IfMonitorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+    	// TODO 엔드포인트 /monitor/list_로 get요청시 -> 
+    	// GET /monitor/list 로그 생성
         System.out.println("GET /monitor/list");
 
         try {
