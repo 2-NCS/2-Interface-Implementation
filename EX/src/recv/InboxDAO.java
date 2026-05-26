@@ -27,8 +27,8 @@ public class InboxDAO {
                            String status, int procMs, String errMsg) throws SQLException {
     	// conn을 통해 SQL_INSERT 쿼리 준비
     	try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT))
-
         {
+    		// 파라미터 6개 바인딩
             pstmt.setString(1, ifId);
             pstmt.setString(2, txNo);
             pstmt.setString(3, payload);
