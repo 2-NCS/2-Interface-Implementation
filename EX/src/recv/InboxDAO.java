@@ -46,6 +46,7 @@ public class InboxDAO {
         try (Connection conn = DBManager.getGroupwareConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_LIST);
              ResultSet rs = pstmt.executeQuery()) {
+            // ResultSet으로 한 줄씩 읽고 Inbox 객체에 담아 List 반환
             while (rs.next()) {
                 Inbox in = new Inbox();
                 in.inboxId = rs.getLong("inbox_id");
@@ -58,7 +59,6 @@ public class InboxDAO {
                 list.add(in);
             }
         }
-        // ResultSet으로 한 줄씩 읽고 Inbox 객체에 담아 List 반환
         return list;
     }
 
