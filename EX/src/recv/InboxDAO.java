@@ -25,7 +25,9 @@ public class InboxDAO {
 
     public void insertInTx(Connection conn, String ifId, String txNo, String payload,
                            String status, int procMs, String errMsg) throws SQLException {
-        try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT))
+        	// conn을 통해 SQL_INSERT 쿼리 준비
+        {
             pstmt.setString(1, ifId);
             pstmt.setString(2, txNo);
             pstmt.setString(3, payload);
