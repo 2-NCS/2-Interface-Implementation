@@ -33,7 +33,7 @@ public class IfRetryServlet extends HttpServlet {
         // 유효성 체크에 통과하면 저장한 변수를 Long타입으로 변환 후 outboxDAO.reopen의 매개변수로 함수 호출
         try {
             outboxDAO.reopen(Long.parseLong(idStr));
-        } catch (Exception e) {
+        } catch (Exception e) {// 이 때 에러상황 발생대비 try catch 후 에러메시지 전송
             e.printStackTrace();
             resp.sendError(500, "재시도 오류: " + e.getMessage());
             return;
