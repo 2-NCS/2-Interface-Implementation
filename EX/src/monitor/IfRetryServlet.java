@@ -28,6 +28,7 @@ public class IfRetryServlet extends HttpServlet {
         System.out.println("POST /monitor/retry");
         // 요청받을 때 getParameter로 outboxId를 받고 String타입으로 저장
         String idStr = req.getParameter("outboxId");
+        // 이때 저장한 String타입 변수 유효성 체크
         if (idStr == null) { resp.sendError(400, "outboxId 필요"); return; }
 
         try {
