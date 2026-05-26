@@ -35,7 +35,7 @@ public class Employee {
         this.hireDt   = hireDt;
         this.email    = email;
     }
-
+    // Getter / Setter 메소드 내부 리턴 및 대입
     public String getEmpId()             { return empId; }
     public void   setEmpId(String v)     { this.empId = v; }
     public String getEmpName()           { return empName; }
