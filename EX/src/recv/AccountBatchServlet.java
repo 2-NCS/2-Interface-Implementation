@@ -105,7 +105,7 @@ public class AccountBatchServlet extends HttpServlet {
             return String.format("OK (account=%s, %dms)", empId, System.currentTimeMillis() - startMs);
 
         } catch (SQLException e) {
-        	 
+        	 // 에러 발생시 rollback 후 기록 남기고 FAIL 반환
             String msg = e.getMessage();
             String errCode;
             if      (msg != null && msg.startsWith("DEPT_NOT_FOUND")) errCode = "E30";
