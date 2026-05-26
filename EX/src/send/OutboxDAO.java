@@ -78,7 +78,7 @@ public class OutboxDAO {
             return pstmt.executeUpdate();
         }
     }
-
+    // 5. 모니터링용 전체 목록 조회 메서드 구현
     public List<Outbox> listAll() throws SQLException {
         List<Outbox> out = new ArrayList<>();
         try (Connection conn = DBManager.getHrmConnection();
