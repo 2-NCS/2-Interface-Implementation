@@ -46,6 +46,7 @@ public class AccountDAO {
             }
         }
         conn.setAutoCommit(false);
+        // empId + "1234" 로 초기 비밀번호 생성 후 SHA-256 암호화
         // 비밀번호 해시 = SHA-256(empId + 초기비번 suffix)
         String pwdPlain = empId + DBManager.getInitPasswordSuffix();
         String pwdHash  = HashUtil.sha256(pwdPlain);
