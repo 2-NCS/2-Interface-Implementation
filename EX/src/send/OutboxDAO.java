@@ -30,7 +30,8 @@ public class OutboxDAO {
     private static final String SQL_LIST_ALL =
             "SELECT outbox_id, if_id, tx_no, status, retry_cnt, reg_dt, proc_dt, err_msg " +
             "FROM if_outbox ORDER BY outbox_id DESC LIMIT 100";
-
+    
+    // 1. 미처리(N) 대기열 데이터 조회 메서드 구현
     public List<Outbox> fetchPending(int maxRetry, int limit) throws SQLException {
         List<Outbox> out = new ArrayList<>();
         try (Connection conn = DBManager.getHrmConnection();
@@ -51,7 +52,7 @@ public class OutboxDAO {
         }
         return out;
     }
-
+    
     public int markSuccess(long outboxId) throws SQLException {
         try (Connection conn = DBManager.getHrmConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_MARK_SUCCESS)) {
