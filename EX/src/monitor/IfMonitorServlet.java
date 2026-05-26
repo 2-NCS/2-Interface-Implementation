@@ -43,6 +43,7 @@ public class IfMonitorServlet extends HttpServlet {
             e.printStackTrace();
             req.setAttribute("error", "조회 오류: " + e.getMessage());
         }
+        // 속성의 정보를 foward방식으로 /monitor/list.jsp 에 전달 및 화면이동
         req.getRequestDispatcher("/monitor/list.jsp").forward(req, resp);
     }
 }
