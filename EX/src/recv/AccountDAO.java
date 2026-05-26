@@ -71,6 +71,7 @@ public class AccountDAO {
     /** 모니터링 — 계정 목록 (pwd_hash 노출 X) */
     public List<Map<String, Object>> listAccounts() throws SQLException {
         List<Map<String, Object>> out = new ArrayList<>();
+        // DBManager로 DB 연결 후 SQL_LIST 실행
         try (Connection conn = DBManager.getGroupwareConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_LIST);
              ResultSet rs = pstmt.executeQuery()) {
