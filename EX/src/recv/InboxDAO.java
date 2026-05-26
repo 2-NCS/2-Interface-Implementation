@@ -58,6 +58,7 @@ public class InboxDAO {
                 list.add(in);
             }
         }
+        // ResultSet으로 한 줄씩 읽고 Inbox 객체에 담아 List 반환
         return list;
     }
 
