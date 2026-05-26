@@ -65,6 +65,7 @@ public class EmpRegistServlet extends HttpServlet {
         Employee emp = new Employee(empId, empName, deptCd, position, hireDt, email);
 
         try {
+        	// 8. DAO를 호출하여 DB 및 Outbox 트랜잭션 처리
             long outboxId = empDAO.createEmployeeWithOutbox(emp);
             String msg = String.format(
                 "입사 등록 완료. empId=%s, outboxId=%d (계정은 배치 처리 후 발급됩니다)",
