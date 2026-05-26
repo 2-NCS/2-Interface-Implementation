@@ -1,0 +1,21 @@
+# ============================================================
+# [시험] EX 인터페이스 구현 — DB 접속 정보
+# ============================================================
+db.driver=com.mysql.cj.jdbc.Driver
+
+# 송신측 (HrmDB)
+hrm.url=jdbc:mysql://localhost:3306/HrmDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+hrm.user=ifuserx
+hrm.password=ifx1234!
+
+# 수신측 (GroupwareDB)
+gw.url=jdbc:mysql://localhost:3306/GroupwareDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+gw.user=ifuserx
+gw.password=ifx1234!
+
+# 배치 처리 옵션
+batch.fetch.size=100
+batch.max.retry=3
+
+# 초기 비밀번호 시드 (운영에선 KMS 사용 권장)
+account.init.password.suffix=1234

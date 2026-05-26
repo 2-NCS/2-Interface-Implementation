@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+    <display-name>IfApp_EX — 사원입사 → 그룹웨어 계정발급 (인터페이스 시험)</display-name>
+
+    <!-- 송신측: 사원 입사등록 -->
+    <servlet>
+        <servlet-name>EmpRegistServlet</servlet-name>
+        <servlet-class>send.EmpRegistServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmpRegistServlet</servlet-name>
+        <url-pattern>/send/emp</url-pattern>
+    </servlet-mapping>
+
+    <!-- 수신측: 배치 처리 -->
+    <servlet>
+        <servlet-name>AccountBatchServlet</servlet-name>
+        <servlet-class>recv.AccountBatchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccountBatchServlet</servlet-name>
+        <url-pattern>/recv/batch</url-pattern>
+    </servlet-mapping>
+
+    <!-- 모니터링 -->
+    <servlet>
+        <servlet-name>IfMonitorServlet</servlet-name>
+        <servlet-class>monitor.IfMonitorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IfMonitorServlet</servlet-name>
+        <url-pattern>/monitor/list</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>IfRetryServlet</servlet-name>
+        <servlet-class>monitor.IfRetryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IfRetryServlet</servlet-name>
+        <url-pattern>/monitor/retry</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>common.CharacterEncodingFilter</filter-class>
+        <init-param><param-name>encoding</param-name><param-value>UTF-8</param-value></init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>
