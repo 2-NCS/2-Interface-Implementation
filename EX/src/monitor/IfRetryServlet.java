@@ -30,7 +30,7 @@ public class IfRetryServlet extends HttpServlet {
         String idStr = req.getParameter("outboxId");
         // 이때 저장한 String타입 변수 유효성 체크
         if (idStr == null) { resp.sendError(400, "outboxId 필요"); return; }
-
+        // 유효성 체크에 통과하면 저장한 변수를 Long타입으로 변환 후 outboxDAO.reopen의 매개변수로 함수 호출
         try {
             outboxDAO.reopen(Long.parseLong(idStr));
         } catch (Exception e) {
