@@ -26,7 +26,7 @@ public class IfRetryServlet extends HttpServlet {
     	// TODO 엔드포인트 /monitor/retry_로 post요청시 ->
     	// POST /monitor/retry 로그 생성
         System.out.println("POST /monitor/retry");
-
+        // 요청받을 때 getParameter로 outboxId를 받고 String타입으로 저장
         String idStr = req.getParameter("outboxId");
         if (idStr == null) { resp.sendError(400, "outboxId 필요"); return; }
 
