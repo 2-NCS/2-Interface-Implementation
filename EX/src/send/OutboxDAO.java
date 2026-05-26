@@ -60,7 +60,7 @@ public class OutboxDAO {
             return pstmt.executeUpdate();
         }
     }
-
+    // 3. 연동 실패(F) 상태 업데이트 메서드 구현
     public int markFail(long outboxId, String errMsg) throws SQLException {
         try (Connection conn = DBManager.getHrmConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_MARK_FAIL)) {
