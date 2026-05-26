@@ -23,6 +23,8 @@ public class IfRetryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+    	// TODO 엔드포인트 /monitor/retry_로 post요청시 ->
+    	// POST /monitor/retry 로그 생성
         System.out.println("POST /monitor/retry");
 
         String idStr = req.getParameter("outboxId");
