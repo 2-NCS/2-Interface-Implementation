@@ -69,7 +69,8 @@ public class OutboxDAO {
             return pstmt.executeUpdate();
         }
     }
-
+    
+    // 4. 실패 데이터를 재처리 대기(N) 상태로 초기화하는 메서드 구현
     public int reopen(long outboxId) throws SQLException {
         try (Connection conn = DBManager.getHrmConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_REOPEN)) {
