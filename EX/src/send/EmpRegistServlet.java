@@ -70,6 +70,7 @@ public class EmpRegistServlet extends HttpServlet {
             String msg = String.format(
                 "입사 등록 완료. empId=%s, outboxId=%d (계정은 배치 처리 후 발급됩니다)",
                 empId, outboxId);
+            // 9. 성공 결과 페이지 포워딩
             forward(req, resp, "OK", msg, empId);
         } catch (SQLException e) {
             e.printStackTrace();
