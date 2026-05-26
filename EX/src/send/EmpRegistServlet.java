@@ -74,6 +74,7 @@ public class EmpRegistServlet extends HttpServlet {
             forward(req, resp, "OK", msg, empId);
         } catch (SQLException e) {
             e.printStackTrace();
+            // 10. 예외 발생 시 실패 결과 페이지 포워딩
             forward(req, resp, "FAIL", "E90 DB 오류: " + e.getMessage(), null);
         }
     }
