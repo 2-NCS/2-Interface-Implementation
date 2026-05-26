@@ -36,6 +36,7 @@ public class InboxDAO {
             pstmt.setString(6, errMsg);
             // 파라미터 6개 바인딩
             pstmt.executeUpdate();
+            // executeUpdate()로 INSERT 실행
         }
     }
 
