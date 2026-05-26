@@ -42,6 +42,7 @@ public class InboxDAO {
 
     public List<Inbox> listAll() throws SQLException {
         List<Inbox> list = new ArrayList<>();
+        // DBManager로 DB 연결 후 SQL_LIST 쿼리 실행
         try (Connection conn = DBManager.getGroupwareConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL_LIST);
              ResultSet rs = pstmt.executeQuery()) {
