@@ -63,7 +63,9 @@ public class DBManager {
     public static void close(AutoCloseable... closeables) {
         for (AutoCloseable c : closeables) {
             if (c != null) {
-                try { c.close(); }
+                try {
+                	//각 자원의 close() 호출하여 반환
+                	c.close(); }
                 catch (Exception e) { e.printStackTrace(); }
             }
         }
