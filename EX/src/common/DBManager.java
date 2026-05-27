@@ -27,7 +27,7 @@ public class DBManager {
         String url      = "jdbc:mysql://localhost:3306/HrmDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
         String user     = "ifuserx";
         String password = "ifx1234!";
-     // JDBC 드라이버 클래스 로드
+        // JDBC 드라이버 클래스 로드
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -37,7 +37,7 @@ public class DBManager {
     }
 
     /** 수신측 GroupwareDB Connection */
-    //
+    // 수신측 GroupwareDB 커넥션 객체를 생성하여 반환하는 메서드 구현
     public static Connection getGroupwareConnection() throws SQLException {
         String driver   = "com.mysql.cj.jdbc.Driver";
         String url      = "jdbc:mysql://localhost:3306/GroupwareDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
