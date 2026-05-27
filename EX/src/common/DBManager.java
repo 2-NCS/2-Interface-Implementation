@@ -27,7 +27,7 @@ public class DBManager {
         String url      = "jdbc:mysql://localhost:3306/HrmDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
         String user     = "ifuserx";
         String password = "ifx1234!";
-        // 
+     // JDBC 드라이버 클래스 로드
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
