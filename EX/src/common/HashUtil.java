@@ -32,6 +32,7 @@ public class HashUtil {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             // 평문을 UTF-8 바이트로 쪼개어 해시(암호화) 수행
             byte[] hash = md.digest(plain.getBytes(StandardCharsets.UTF_8));
+            // 암호화된 2진수 바이트 배열을 16진수 문자열로 조립 (최종 64글자)
             StringBuilder sb = new StringBuilder(64);
             for (byte b : hash) sb.append(String.format("%02x", b));
             return sb.toString();
