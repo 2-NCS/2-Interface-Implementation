@@ -30,6 +30,7 @@ public class HashUtil {
         try {
         	// SHA-256 암호화 알고리즘 객체 생성
             MessageDigest md = MessageDigest.getInstance("SHA-256");
+            // 평문을 UTF-8 바이트로 쪼개어 해시(암호화) 수행
             byte[] hash = md.digest(plain.getBytes(StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder(64);
             for (byte b : hash) sb.append(String.format("%02x", b));
