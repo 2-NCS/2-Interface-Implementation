@@ -52,7 +52,7 @@ public class DBManager {
         }
         return DriverManager.getConnection(url, user, password);
     }
-
+    // 배치 처리 및 계정 생성에 필요한 공통 프로퍼티 설정값 정의
     public static int    getFetchSize()           { return 100; }
     public static int    getMaxRetry()            { return 3;   }
     /** 계정 초기 비밀번호 suffix — empId + 이 값을 SHA-256 해시한 게 pwd_hash */
