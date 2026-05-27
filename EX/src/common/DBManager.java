@@ -59,6 +59,7 @@ public class DBManager {
     public static String getInitPasswordSuffix() { return "1234"; }
 
     /** AutoCloseable 자원 여러 개 안전 close */
+    // Connection, Statement, ResultSet 등 다양한 DB 자원을 일괄 해제하는 메서드 구현
     public static void close(AutoCloseable... closeables) {
         for (AutoCloseable c : closeables) {
             if (c != null) {
