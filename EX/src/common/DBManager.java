@@ -21,12 +21,13 @@ public class DBManager {
     private DBManager() {}
 
     /** 송신측 HrmDB Connection */
+    // 송신측 HrmDB 커넥션 객체를 생성하여 반환하는 메서드 구현 
     public static Connection getHrmConnection() throws SQLException {
         String driver   = "com.mysql.cj.jdbc.Driver";
         String url      = "jdbc:mysql://localhost:3306/HrmDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
         String user     = "ifuserx";
         String password = "ifx1234!";
-
+        // 
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -36,12 +37,13 @@ public class DBManager {
     }
 
     /** 수신측 GroupwareDB Connection */
+    //
     public static Connection getGroupwareConnection() throws SQLException {
         String driver   = "com.mysql.cj.jdbc.Driver";
         String url      = "jdbc:mysql://localhost:3306/GroupwareDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
         String user     = "ifuserx";
         String password = "ifx1234!";
-
+        //
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
