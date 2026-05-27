@@ -37,6 +37,7 @@ public class HashUtil {
             for (byte b : hash) sb.append(String.format("%02x", b));
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
+        	// 알맞은 암호화 알고리즘 이름이 없을 경우 예외 처리
             throw new RuntimeException(e);
         }
     }
