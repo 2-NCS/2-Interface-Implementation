@@ -43,8 +43,9 @@ public class DBManager {
         String url      = "jdbc:mysql://localhost:3306/GroupwareDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
         String user     = "ifuserx";
         String password = "ifx1234!";
-        //
+        
         try {
+        	// JDBC 드라이버 클래스 로드
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("DBManager.getGroupwareConnection Class.forName..." + e.getCause());
