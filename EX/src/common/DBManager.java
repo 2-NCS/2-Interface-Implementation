@@ -21,12 +21,13 @@ public class DBManager {
     private DBManager() {}
 
     /** 송신측 HrmDB Connection */
+    // 송신측 HrmDB 커넥션 객체를 생성하여 반환하는 메서드 구현 
     public static Connection getHrmConnection() throws SQLException {
         String driver   = "com.mysql.cj.jdbc.Driver";
         String url      = "jdbc:mysql://localhost:3306/HrmDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
         String user     = "ifuserx";
         String password = "ifx1234!";
-
+        // JDBC 드라이버 클래스 로드
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -36,30 +37,35 @@ public class DBManager {
     }
 
     /** 수신측 GroupwareDB Connection */
+    // 수신측 GroupwareDB 커넥션 객체를 생성하여 반환하는 메서드 구현
     public static Connection getGroupwareConnection() throws SQLException {
         String driver   = "com.mysql.cj.jdbc.Driver";
         String url      = "jdbc:mysql://localhost:3306/GroupwareDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
         String user     = "ifuserx";
         String password = "ifx1234!";
-
+        
         try {
+        	// JDBC 드라이버 클래스 로드
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("DBManager.getGroupwareConnection Class.forName..." + e.getCause());
         }
         return DriverManager.getConnection(url, user, password);
     }
-
+    // 배치 처리 및 계정 생성에 필요한 공통 프로퍼티 설정값 정의
     public static int    getFetchSize()           { return 100; }
     public static int    getMaxRetry()            { return 3;   }
     /** 계정 초기 비밀번호 suffix — empId + 이 값을 SHA-256 해시한 게 pwd_hash */
     public static String getInitPasswordSuffix() { return "1234"; }
 
     /** AutoCloseable 자원 여러 개 안전 close */
+    // Connection, Statement, ResultSet 등 다양한 DB 자원을 일괄 해제하는 메서드 구현
     public static void close(AutoCloseable... closeables) {
         for (AutoCloseable c : closeables) {
             if (c != null) {
-                try { c.close(); }
+                try {
+                	//각 자원의 close() 호출하여 반환
+                	c.close(); }
                 catch (Exception e) { e.printStackTrace(); }
             }
         }
